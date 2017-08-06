@@ -51,3 +51,19 @@ form {
  .container {
   background-color: rgba(240, 60, 60, 0.8);
 }
+
+#locations {
+  transform:translateZ(0);
+}
+
+#ingredients {
+  transform:translateZ(0);
+}
+
+#callToAction {
+  transform: translateZ(0);
+}
+
+#header {
+  transform: translateZ(0);
+}
