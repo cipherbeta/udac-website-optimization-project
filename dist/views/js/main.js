@@ -1,3 +1,17 @@
+/*
+Hey Udac review person!
+
+One side note that I noticed when making sure I included
+all the changes in the readme - the minifier I used to generate
+main.min.js (and conversely popped back into the main file and
+beautified to get the below file) replaced all function parameters
+with abstract variables. This actually helped me as well,
+so I stuck with it in the final copy. Just a forewarning. Thanks!
+
+~ IsaacD
+*/
+
+// Listing out all our ingredients
 var pizzaIngredients = {};
 pizzaIngredients.meats = ["Pepperoni", "Sausage", "Fennel Sausage", "Spicy Sausage", "Chicken", "BBQ Chicken", "Chorizo", "Chicken Andouille", "Salami", "Tofu", "Bacon", "Canadian Bacon", "Proscuitto", "Italian Sausage", "Ground Beef", "Anchovies", "Turkey", "Ham", "Venison", "Lamb", "Duck", "Soylent Green", "Carne Asada", "Soppressata Picante", "Coppa", "Pancetta", "Bresola", "Lox", "Guanciale", "Chili", "Beef Jerky", "Pastrami", "Kielbasa", "Scallops", "Filet Mignon"];
 pizzaIngredients.nonMeats = ["White Onions", "Red Onions", "Sauteed Onions", "Green Peppers", "Red Peppers", "Banana Peppers", "Ghost Peppers", "Habanero Peppers", "Jalapeno Peppers", "Stuffed Peppers", "Spinach", "Tomatoes", "Pineapple", "Pear Slices", "Apple Slices", "Mushrooms", "Arugula", "Basil", "Fennel", "Rosemary", "Cilantro", "Avocado", "Guacamole", "Salsa", "Swiss Chard", "Kale", "Sun Dried Tomatoes", "Walnuts", "Artichoke", "Asparagus", "Caramelized Onions", "Mango", "Garlic", "Olives", "Cauliflower", "Polenta", "Fried Egg", "Zucchini", "Hummus"];
@@ -8,6 +22,7 @@ String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
 };
 
+// Creating some adjectives for our pizzas
 function getAdj(l) {
   switch (l) {
     case "dark":
@@ -43,6 +58,7 @@ function getAdj(l) {
   }
 }
 
+// getting a noun for our pizza
 function getNoun(j) {
   switch (j) {
     case "animals":
@@ -80,9 +96,12 @@ function getNoun(j) {
       return d
   }
 }
+
+// defining the 'master' categories for each pizza
 var adjectives = ["dark", "color", "whimsical", "shiny", "noisy", "apocalyptic", "insulting", "praise", "scientific"];
 var nouns = ["animals", "everyday", "fantasy", "gross", "horror", "jewelry", "places", "scifi"];
 
+// Generating out our pizza name. Pulls an adjective from the list provided, pulls a name, finds the length of each string, then capitalizes the first letter and returns the complete string.
 function generator(c, g) {
   var b = getAdj(c);
   var f = getNoun(g);
@@ -92,77 +111,118 @@ function generator(c, g) {
   return d
 }
 
+// Randomly picks an adjective and noun from the master list, then calls/returns our generator function to define the list to a final name.
 function randomName() {
   var a = parseInt(Math.random() * adjectives.length);
   var b = parseInt(Math.random() * nouns.length);
   return generator(adjectives[a], nouns[b])
 }
+
+// Randomly selects a meat ingredient.
 var selectRandomMeat = function() {
   var a = pizzaIngredients.meats[Math.floor((Math.random() * pizzaIngredients.meats.length))];
   return a
 };
+
+// Randomly selects a non-meat ingredient.
 var selectRandomNonMeat = function() {
   var a = pizzaIngredients.nonMeats[Math.floor((Math.random() * pizzaIngredients.nonMeats.length))];
   return a
 };
+
+// Randomly selects a cheese.
 var selectRandomCheese = function() {
   var a = pizzaIngredients.cheeses[Math.floor((Math.random() * pizzaIngredients.cheeses.length))];
   return a
 };
+
+// Randomly selects a sauce.
 var selectRandomSauce = function() {
   var a = pizzaIngredients.sauces[Math.floor((Math.random() * pizzaIngredients.sauces.length))];
   return a
 };
+
+// Randomly selects a crust... Pretzel, anyone?
 var selectRandomCrust = function() {
   var a = pizzaIngredients.crusts[Math.floor((Math.random() * pizzaIngredients.crusts.length))];
   return a
 };
+
+// Returns the ingredient from a specified section above and returns it as a list item for our DOM.
 var ingredientItemizer = function(a) {
   return "<li>" + a + "</li>"
 };
+
+// Randomly define a few quick variables for randomization purposes. var a, g, and f are used in the for loops to determine how many ingredients of each category will make it into our final generated pizza. Var e is an empty that we use to assist with insertion into our DOM.
 var makeRandomPizza = function() {
   var e = "";
   var a = Math.floor((Math.random() * 4));
   var g = Math.floor((Math.random() * 3));
   var f = Math.floor((Math.random() * 2));
+  // Loop through var d, add a random meat every tick
   for (var d = 0; d < a; d++) {
     e = e + ingredientItemizer(selectRandomMeat())
   }
+  // Loop through var d, add a random nonmeat every tick
   for (var c = 0; c < g; c++) {
     e = e + ingredientItemizer(selectRandomNonMeat())
   }
+  // Loop through var d, add a random cheese every tick
   for (var b = 0; b < f; b++) {
     e = e + ingredientItemizer(selectRandomCheese())
   }
+  // There can only be one sauce. Unless you've just downed a 40 and are feeling reckless. Up to you. But this will only generate one.
   e = e + ingredientItemizer(selectRandomSauce());
+  // Generates a single crust.
   e = e + ingredientItemizer(selectRandomCrust());
+  // var e, when returned, will include all of our individual <li> tags with random ingredients added inbetween.
   return e
 };
+
+// Takes the randomized pizza we've now put together and creates a dom element for it.
 var pizzaElementGenerator = function(d) {
+  // defines our vars for the function.
   var c, f, e, a, g, b;
+  // applies dom elements to each respective var.
   c = document.createElement("div");
   f = document.createElement("div");
   e = document.createElement("img");
   a = document.createElement("div");
+  // starting with our container div, adding classes, an id modified by our generator function above, and setting some quick styles.
   c.classList.add("randomPizzaContainer");
   c.style.width = "33.33%";
   c.style.height = "325px";
   c.id = "pizza" + d;
+  // setting a width for the div that's going to hold our image
   f.style.width = "35%";
+  // setting source for our image tag, and adding a bootstrap responsive class to it
   e.src = "images/pizza.png";
   e.classList.add("img-responsive");
+  // appending our image onto our image div
   f.appendChild(e);
+  // now appending our image div into the container div
   c.appendChild(f);
+  // setting a width for the text div that's going to hold our pizza name
   a.style.width = "65%";
+  // creating a new h4 element
   g = document.createElement("h4");
+  // popping in the name generated by randomName();
   g.innerHTML = randomName();
+  // appending randomName(); to our text div
   a.appendChild(g);
+  // creating our ingredient unordered list
   b = document.createElement("ul");
+  // adding in our ingredients generated by makeRandomPizza();
   b.innerHTML = makeRandomPizza();
+  // appending our makeRandomPizza(); list underneath our randomName();
   a.appendChild(b);
+  // appending all our text onto the container div
   c.appendChild(a);
+  // returns the whole dom element for a single, fully randomly generated pizza.
   return c
 };
+
+// Function that takes a gander at sizeSlider when called, and does a case switch depending on the current input value of the switch. Logs to console if something breaks.
 var resizePizzas = function(b) {
   window.performance.mark("mark_start_resize");
 
@@ -181,8 +241,10 @@ var resizePizzas = function(b) {
         console.log("bug in changeSliderLabel")
     }
   }
+  // Calls our switch our whatever parameter is thrown into resizePizzas.
   c(b);
 
+  // similar to prior switch, defines newWidth value which updates across CSS to change pizza size to 1/4 container width, 1/3 container width, and 1/2 container width respectfully.
   function a(g) {
     switch (g) {
       case "1":
@@ -197,29 +259,41 @@ var resizePizzas = function(b) {
       default:
         console.log("bug in sizeSwitcher")
     }
+    // Selects all our .randomPizzaContainer generated by pizzaElementGenerator();.
     var f = document.querySelectorAll(".randomPizzaContainer");
+    // Iterates through the number of pizzas available on page, and sets their new width based on var newWidth.
     for (var e = 0; e < f.length; e++) {
       f[e].style.width = newWidth + "%"
     }
   }
+  // Calls our newWidth switch using the resizePizzas(); parameter.
   a(b);
+
+  // Timing voodoo stuff that I don't quite understand. But it works! Appears to me it's marking the time between the detection of the initial switch @ sizeSwitcher and the completion of the layout change.
   window.performance.mark("mark_end_resize");
   window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
   var d = window.performance.getEntriesByName("measure_pizza_resize");
   console.log("Time to resize pizzas: " + d[d.length - 1].duration + "ms")
 };
 window.performance.mark("mark_start_generating");
+// We've got two pizzas already premade in the dom - this for loop iterates with that offset to make sure we display exactly 100 pizzas in total.
 for (var i = 2; i < 100; i++) {
+  // snag the randomPizzas element, assign to var
   var pizzasDiv = document.getElementById("randomPizzas");
+  // append those additional pizzas onto the end of the randomPizzas div.
   pizzasDiv.appendChild(pizzaElementGenerator(i))
 }
+
+// More timing voodoo, marks the start of pizza generation (save the two premade ones) and the end, and give sthe time between.
 window.performance.mark("mark_end_generating");
 window.performance.measure("measure_pizza_generation", "mark_start_generating", "mark_end_generating");
 var timeToGenerate = window.performance.getEntriesByName("measure_pizza_generation");
 console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "ms");
 var frame = 0;
 
+// displays average scripting time to generate the last 10 frames.
 function logAverageFrame(d) {
+  // defines junker vars, sets c to length of function parameter
   var c = d.length;
   var b = 0;
   for (var a = c - 1; a > c - 11; a--) {
@@ -228,6 +302,7 @@ function logAverageFrame(d) {
   console.log("Average scripting time to generate last 10 frames: " + b / 10 + "ms")
 }
 
+// more or less scatters pizzas willy-nilly across the background. Calls logAverageFrame(); for performance metrics.
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
@@ -244,6 +319,7 @@ function updatePositions() {
   }
 }
 window.addEventListener("scroll", updatePositions);
+
 document.addEventListener("DOMContentLoaded", function() {
   var d = 8;
   var b = 256;
