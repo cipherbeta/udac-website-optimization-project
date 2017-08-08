@@ -1,10 +1,16 @@
 # Website Performance Optimization Portfolio Project.
 
-*This repo is for the Udacity Front End Web Developer Nanodegree Web Perf project. For this project, my goal is to reduce jank as much as physically possible, keep FPS >60, and hit 90+ on PageSpeed. And we've done so!*
+*This repo is for the Udacity Front End Web Developer Nanodegree Web Perf project. For this project, my goal is to reduce jank as much as physically possible, keep FPS >60, and hit 90+ on PageSpeed.*
+___
+
+## Launching the website.
+Clone the repo, or download the .zip file and unzip. From there, you can launch the optimized website via opening `dist/index.html` in your web browser of choice, or review the source material in `src/index.html`
+
+If you're looking for the pizza performance test, take a peek at `dist/views/pizza.html`, or `src/views/pizza.html` respectively.
 ___
 
 ## Main Site Optimization.
-We used a specific set of optimizations for each of the four main pages.
+(i.e. repeated across the 'normal' portfolio pages)
 ___
 
 ##### 1. Image Optim.
@@ -38,7 +44,9 @@ Quick things out of the way first - ran the source main.js through a minifier th
 
 Performance optimizations on the code itself include refactoring the `resizePizzas();` function, which was throwing multiple forced synchronous layouts over and over. We refactored the code along Cam's lines to A, reduce repetition, and B, only force one layout change.
 
-This, combined with the CSS layers fix, brings it to a silky smooth 120FPS during testing.
+Some other minor optimizations include changing any querySelector strings to their appropriate Web API variants - getElementById and getElementsByClassName.
+
+Lastly, we changed the background pizza generation script to automatically calculate out the appropriate rows and columns so we don't generate any more pizzas than will display appropriately on the screen.
 
 ##### 3. Image Optim.
 Using tinyPNG/tinyJPG we've reduced all images down to the smallest lossless file possible.
