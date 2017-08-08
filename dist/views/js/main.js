@@ -324,7 +324,7 @@ window.addEventListener("scroll", updatePositions);
 
 document.addEventListener("DOMContentLoaded", function() {
   var b = 256;
-  var d = 4; // halved our columns to fit better
+  var d = 8; // halved our columns to fit better
   var e = window.innerHeight;
   var f = Math.ceil(e / b) * d; // calculates out our rows based on window innerheight
   for (var a = 0; a < f; a++) {
